@@ -10,16 +10,16 @@ if (isset($_POST['save'])){
             if (!empty($no_hp_baru)){
                 if (!empty($_POST['id'])){
                     $id_baru = $_POST['id'];
-                    $queri3 = mysqli_query($mysqli, "UPDATE pasien SET 
+                    $queri3 = mysqli_query($mysqli, "UPDATE dokter SET 
                         nama='$nama_baru',
                         alamat='$alamat_baru',
                         no_hp='$no_hp_baru' WHERE id='$id_baru'");
                 } else {
                     $queri4 = mysqli_query($mysqli, "INSERT INTO 
-                        pasien(nama,alamat,no_hp) VALUES(
+                        dokter(nama,alamat,no_hp) VALUES(
                             '$nama_baru','$alamat_baru','$no_hp_baru')");
                 }
-                header("Location: pasien.php"); 
+                header("Location: dokter.php"); 
                 exit(); 
             } else{
                 echo "<script>alert('Silakan lengkapi bagian No HP!')</script>";
@@ -36,9 +36,9 @@ if (isset($_GET['aksi'])){
     $aksi=$_GET['aksi'];
     $id=$_GET['id'];
     if ($aksi == 'hapus'){
-        $queri5 = mysqli_query($mysqli, "DELETE FROM pasien 
+        $queri5 = mysqli_query($mysqli, "DELETE FROM dokter 
             WHERE id='$id'");
-        header("Location: pasien.php"); 
+        header("Location: dokter.php"); 
         exit();  
     }
 }
@@ -66,10 +66,10 @@ if (isset($_GET['aksi'])){
                     <a class="nav-link text-center" href="home.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-center" href="dokter.php">Dokter</a>
+                    <a class="nav-link text-center active disabled" aria-current="page" href="#">Dokter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-center active disabled" aria-current="page" href="#">Pasien</a>
+                    <a class="nav-link text-center" href="pasien.php">Pasien</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-center" href="periksa.php">Periksa</a>
@@ -83,7 +83,7 @@ if (isset($_GET['aksi'])){
     </nav>
 
     <div class="container mt-4">
-        <h4 class="text-center mb-4">Form Pasien</h4>
+        <h4 class="text-center mb-4">Form Dokter</h4>
         <form class="form-floating" method="POST" action="" name="myForm">
             <?php 
             $nama = '';
@@ -92,7 +92,7 @@ if (isset($_GET['aksi'])){
             if (isset($_GET['id'])){
                 $id=$_GET['id'];
                 $queri1 = mysqli_query($mysqli, 
-                    "SELECT * FROM pasien WHERE id='$id'");
+                    "SELECT * FROM dokter WHERE id='$id'");
                 while ($row1 = mysqli_fetch_array($queri1)){
                     $nama = $row1['nama'];
                     $alamat = $row1['alamat'];
@@ -103,23 +103,23 @@ if (isset($_GET['aksi'])){
             }?>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" name="newNama" 
-                    placeholder="Nama Pasien" value="<?php echo $nama ?>">
-                <label for="floatingInput">Nama Pasien</label>
+                    placeholder="Nama Dokter" value="<?php echo $nama ?>">
+                <label for="floatingInput">Nama Dokter</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" name="newAlamat" 
-                    placeholder="Alamat Pasien" value="<?php echo $alamat ?>">
-                <label for="floatingInput">Alamat Pasien</label>
+                    placeholder="Alamat Dokter" value="<?php echo $alamat ?>">
+                <label for="floatingInput">Alamat Dokter</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" name="newNoHP" 
-                    placeholder="No HP Pasien" value="<?php echo $no_hp ?>">
-                <label for="floatingInput">No HP Pasien</label>
+                    placeholder="No HP Dokter" value="<?php echo $no_hp ?>">
+                <label for="floatingInput">No HP Dokter</label>
             </div>
             <button type="submit" class="btn btn-primary rounded-pill px-3" name="save">Simpan</button>
         </form>
-        
-        <h4 class="text-center mb-4">Tabel Pasien</h4>
+
+        <h4 class="text-center mb-4">Tabel Dokter</h4>
         <table class="table">
             <thead>
                 <tr>
@@ -133,7 +133,7 @@ if (isset($_GET['aksi'])){
             <tbody>
                 <?php 
                 $i= 1;
-                $queri2 = mysqli_query($mysqli, "SELECT * FROM pasien");
+                $queri2 = mysqli_query($mysqli, "SELECT * FROM dokter");
                 while ($row2 = mysqli_fetch_array($queri2)){?>
                     <tr>
                         <th scope="row"><?php echo $i++ ?></th>
@@ -142,9 +142,9 @@ if (isset($_GET['aksi'])){
                         <td><?php echo $row2['no_hp'] ?></td>
                         <td>
                             <a class="btn btn-info rounded-pill px-3" 
-                                href="pasien.php?id=<?php echo $row2['id'] ?>">Ubah</a>
+                                href="dokter.php?id=<?php echo $row2['id'] ?>">Ubah</a>
                             <a class="btn btn-danger rounded-pill px-3" 
-                                href="pasien.php?id=<?php echo $row2['id']?>
+                                href="dokter.php?id=<?php echo $row2['id']?>
                                     &aksi=hapus">Hapus</a>
                         </td>
                     </tr>
